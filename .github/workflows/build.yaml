@@ -3,9 +3,9 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - 'production'
+      - "production"
     tags:
-      - 'v*.*.*'
+      - "v*.*.*"
 permissions:
   contents: read
   packages: write
