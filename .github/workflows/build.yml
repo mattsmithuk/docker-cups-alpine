@@ -5,7 +5,7 @@ on:
     branches:
       - "production"
     tags:
-      - "v*.*.*"
+      - "*"
 permissions:
   contents: read
   packages: write
@@ -15,7 +15,7 @@ jobs:
     steps:
       # Get the repository's code
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       # https://github.com/docker/setup-qemu-action
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -55,3 +55,9 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+      # Discord
+      - name: Send Discord notification
+        uses: sarisia/actions-status-discord@v1
+        if: always()
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
