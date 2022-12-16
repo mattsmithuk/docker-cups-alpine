@@ -60,5 +60,5 @@ jobs:
         uses: sarisia/actions-status-discord@v1
         if: always()
         with:
-          title: ${{env.GITHUB_REPOSITORY}} ${{ github.workflow}}
+          title: "${{env.GITHUB_REPOSITORY}} ${{ github.workflow}}"
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
