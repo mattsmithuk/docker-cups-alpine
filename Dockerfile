@@ -1,4 +1,7 @@
-FROM alpine:edge
+# syntax=docker/dockerfile:1
+ARG ALPINE_VERSION="3.18.3"
+
+FROM alpine:${ALPINE_VERSION}
 
 # Install the packages we need. Avahi will be included
 RUN echo -e "http://dl-cdn.alpinelinux.org/alpine/edge/testing\nhttp://dl-cdn.alpinelinux.org/alpine/edge/main\nhttp://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories &&\
