@@ -1,6 +1,6 @@
 #!/bin/sh
+
 set -e
-set -x
 
 # Is CUPSADMIN set? If not, set to default
 if [ -z "$CUPSADMIN" ]; then
@@ -23,7 +23,7 @@ rm -rf /etc/avahi/services/*
 rm -rf /etc/cups/ppd
 ln -s /config/ppd /etc/cups
 if [ `ls -l /services/*.service 2>/dev/null | wc -l` -gt 0 ]; then
-	cp -f /services/*.service /etc/avahi/services/
+    cp -f /services/*.service /etc/avahi/services/
 fi
 if [ `ls -l /config/printers.conf 2>/dev/null | wc -l` -eq 0 ]; then
     touch /config/printers.conf

@@ -1,6 +1,7 @@
 # cups-alpine
 
-[![build][badge-gh-actions-build]][link-gh-actions-build]
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/g3rhard/docker-cups-alpine/build.yml?branch=production&style=for-the-badge&logo=github&color=333333)](https://github.com/g3rhard/docker-cups-alpine/actions/workflows/build.yml)
+[![Docker Image Version](https://img.shields.io/docker/v/g3rhard/docker-cups-alpine?style=for-the-badge&logo=docker&logoColor=white&color=333333)](https://hub.docker.com/r/g3rhard/docker-cups-alpine)
 
 Fork from [chuckcharlie/docker-cups-airprint](https://github.com/chuckcharlie/cups-avahi-airprint)
 
@@ -36,6 +37,3 @@ docker run --name cups --restart unless-stopped  --net host\
 * CUPS will be configurable at http://[host ip]:631 using the CUPSADMIN/CUPSPASSWORD.
 * Make sure you select `Share This Printer` when configuring the printer in CUPS.
 * ***After configuring your printer, you need to close the web browser for at least 60 seconds. CUPS will not write the config files until it detects the connection is closed for as long as a minute.***
-
-[badge-gh-actions-build]: https://github.com/g3rhard/docker-cups-alpine/actions/workflows/build.yml/badge.svg?branch=production
-[link-gh-actions-build]: https://github.com/g3rhard/docker-cups-alpine/actions?query=workflow%3Abuild

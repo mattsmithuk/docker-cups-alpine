@@ -1,34 +1,36 @@
 # syntax=docker/dockerfile:1
-ARG ALPINE_VERSION="3.18.3"
+ARG ALPINE_VERSION="3.19"
 
 FROM alpine:${ALPINE_VERSION}
 
 # Install the packages we need. Avahi will be included
-RUN echo -e "http://dl-cdn.alpinelinux.org/alpine/edge/testing\nhttp://dl-cdn.alpinelinux.org/alpine/edge/main\nhttp://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories &&\
-	apk add --update --no-cache cups \
-	cups-libs \
-	cups-pdf \
-	cups-client \
-	cups-filters \
-	cups-dev \
-	gutenprint \
-	gutenprint-libs \
-	gutenprint-doc \
-	gutenprint-cups \
-	ghostscript \
-	brlaser \
-	hplip \
-	avahi \
-	inotify-tools \
-	python3 \
-	python3-dev \
-	py3-pip \
-	build-base \
-	wget \
-	rsync \
-	&& pip3 --no-cache-dir install --upgrade pip \
-	&& pip3 install pycups \
-	&& rm -rf /var/cache/apk/*
+RUN echo -e "http://dl-cdn.alpinelinux.org/alpine/${ALPINE_VERSION}/testing" >> /etc/apk/repositories && \
+    echo -e "http://dl-cdn.alpinelinux.org/alpine/${ALPINE_VERSION}/main" >> /etc/apk/repositories && \
+    echo -e "http://dl-cdn.alpinelinux.org/alpine/${ALPINE_VERSION}/community" >> /etc/apk/repositories && \
+    apk add --update --no-cache cups \
+    cups-libs \
+    cups-pdf \
+    cups-client \
+    cups-filters \
+    cups-dev \
+    gutenprint \
+    gutenprint-libs \
+    gutenprint-doc \
+    gutenprint-cups \
+    ghostscript \
+    brlaser \
+    hplip \
+    avahi \
+    inotify-tools \
+    python3 \
+    python3-dev \
+    py3-pip \
+    build-base \
+    wget \
+    rsync \
+    && pip3 --no-cache-dir install --upgrade pip \
+    && pip3 install pycups \
+    && rm -rf /var/cache/apk/*
 
 # This will use port 631
 EXPOSE 631

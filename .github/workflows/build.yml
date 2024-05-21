@@ -1,12 +1,12 @@
 name: Docker Build/Publish Image
 
 on:
-  workflow_dispatch:
   push:
-    branches:
-      - "production"
-    tags:
-      - "*"
+    branches: [production]
+    paths-ignore:
+      - README.md
+      - .trunk
+  workflow_dispatch: {}
 
 permissions:
   contents: read
@@ -16,50 +16,44 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-
-      - name: Checkout
-        uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@68827325e0b33c7199eb31dd4e31fbe9023e06e3 # v3
 
       - name: Set up Docker Buildx
-        id: buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@d70bba72b1f3fd22344832f00baa16ece964efeb # v3
 
-      - name: Login to Docker Hub
-        if: github.event_name != 'pull_request'
-        uses: docker/login-action@v2
+      - name: Login to DockerHub
+        uses: docker/login-action@e92390c5fb421da1463c202d546fed0ec5c39f20 # v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v4
-        with:
-          images: |
-            g3rhard/cups-alpine
-          tags: |
-            type=raw,value=latest,enable=${{ github.ref_type == 'tag' && !contains(github.ref_name, '-') }}
-            type=raw,value=latest-dev,enable=${{ github.ref_type == 'branch' && github.ref_name == 'production' }}
-            type=raw,value=${{ github.ref_name }}
-            type=raw,value=${{ github.sha }},enable=${{ github.ref_type == 'branch' }}
-          flavor: |
-            latest=false
+      - name: Get current date
+        run: echo "DATE=$(date +'%Y.%m.%d')" >> "$GITHUB_ENV"
 
       - name: Build and push
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@2cdde995de11925a030ce8070c3d77a52ffcf1c0 # v5
         with:
           context: .
-          platforms: linux/arm/v7, linux/amd64
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          push: true
+          tags: ${{ github.repository }}:${{ env.DATE }}-${{ github.ref_name }}
+          platforms: linux/amd64,linux/arm64,linux/arm/v7
+
+      - name: Create a Release
+        uses: elgohr/Github-Release-Action@v5
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          title: "Release ${{ env.DATE }}"
 
       - name: Send Discord notification
-        uses: sarisia/actions-status-discord@v1
+        uses: sarisia/actions-status-discord@6712a17f7d0531d44cd42ca2a878b0bdfd07b62a # v1
         if: always()
         with:
-          title: "${{ github.repository }}: ${{ github.workflow }}"
+          title: "Build image on ${{ github.repository }}: ${{ github.workflow }}"
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          status: ${{ job.status }}
