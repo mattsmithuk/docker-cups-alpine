@@ -24,7 +24,7 @@ Fork from [chuckcharlie/docker-cups-airprint](https://github.com/chuckcharlie/cu
 ### Example run command
 
 ```sh
-docker run --name cups --restart unless-stopped --net host\
+docker run --name cups --restart unless-stopped --net host \
   -v <your services dir>:/services \
   -v <your config dir>:/config \
   -e CUPSADMIN="<username>" \
