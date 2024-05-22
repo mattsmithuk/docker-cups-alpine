@@ -1,12 +1,12 @@
 # syntax=docker/dockerfile:1
-ARG ALPINE_VERSION="3.18"
+ARG ALPINE_VERSION="edge"
 
 FROM alpine:${ALPINE_VERSION}
 
 # Install the packages we need. Avahi will be included
-RUN echo -e "http://dl-cdn.alpinelinux.org/alpine/${ALPINE_VERSION}/testing" >> /etc/apk/repositories && \
-    echo -e "http://dl-cdn.alpinelinux.org/alpine/${ALPINE_VERSION}/main" >> /etc/apk/repositories && \
-    echo -e "http://dl-cdn.alpinelinux.org/alpine/${ALPINE_VERSION}/community" >> /etc/apk/repositories && \
+RUN echo -e "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
+    echo -e "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories && \
+    echo -e "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
     apk add --update --no-cache cups \
     cups-libs \
     cups-pdf \
@@ -27,9 +27,10 @@ RUN echo -e "http://dl-cdn.alpinelinux.org/alpine/${ALPINE_VERSION}/testing" >> 
     py3-pip \
     build-base \
     wget \
-    rsync \
-    && pip3 --no-cache-dir install --upgrade pip \
-    && pip3 install pycups \
+    rsync
+
+RUN pip3 --no-cache-dir install --break-system-packages --upgrade pip \
+    && pip3 install --break-system-packages pycups \
     && rm -rf /var/cache/apk/*
 
 # This will use port 631
