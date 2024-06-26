@@ -6,5 +6,11 @@
     "config:recommended",
     "docker:pinDigests",
     "helpers:pinGitHubActionDigests"
+  ],
+  "packageRules": [
+    {
+      "groupName": "GitHub Actions",
+      "matchManagers": ["github-actions"]
+    }
   ]
 }
