@@ -1,0 +1,13 @@
+services:
+  cups:
+    image: ghcr.io/mattsmithuk/docker-cups-alpine:latest
+    # build: .
+    container_name: cups
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ./services:/services
+      - ./config:/config
+    environment:
+      CUPSADMIN: admin
+      CUPSPASSWORD: cups
