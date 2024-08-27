@@ -32,4 +32,5 @@ cp /config/printers.conf /etc/cups/printers.conf
 
 /usr/sbin/avahi-daemon --daemonize
 /root/printer-update.sh &
+echo "printer updated"
 exec /usr/sbin/cupsd -f

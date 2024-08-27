@@ -1,24 +1,20 @@
-# syntax=docker/dockerfile:1@sha256:fe40cf4e92cd0c467be2cfc30657a680ae2398318afd50b0c80585784c604f28
-ARG ALPINE_VERSION="edge@sha256:166710df254975d4a6c4c407c315951c22753dcaa829e020a3fd5d18fff70dd2"
-
-FROM alpine:${ALPINE_VERSION}
-
+FROM alpine:3.20.2
 # Install the packages we need. Avahi will be included
 RUN echo -e "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
     echo -e "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories && \
     echo -e "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
     apk add --update --no-cache cups \
     cups-libs \
-    cups-pdf \
+    #cups-pdf \
     cups-client \
     cups-filters \
     cups-dev \
-    gutenprint \
-    gutenprint-libs \
-    gutenprint-doc \
-    gutenprint-cups \
-    ghostscript \
-    brlaser \
+    # gutenprint \
+    # gutenprint-libs \
+    # gutenprint-doc \
+    # gutenprint-cups \
+    # ghostscript \
+    # brlaser \
     hplip \
     avahi \
     inotify-tools \
@@ -26,7 +22,7 @@ RUN echo -e "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repo
     python3-dev \
     py3-pip \
     build-base \
-    wget \
+    # wget \
     rsync
 
 RUN pip3 --no-cache-dir install --break-system-packages --upgrade pip \
@@ -36,15 +32,15 @@ RUN pip3 --no-cache-dir install --break-system-packages --upgrade pip \
 # This will use port 631
 EXPOSE 631
 
-# We want a mount for these
-VOLUME /config
-VOLUME /services
+# # We want a mount for these
+# VOLUME /config
+# VOLUME /services
 
 # Add scripts
-COPY root /
+COPY /root/* /root/
 RUN chmod +x /root/*
 
-#Run Script
+# Run Script
 CMD ["/root/run_cups.sh"]
 
 # Baked-in config file changes
