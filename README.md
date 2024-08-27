@@ -1,9 +1,7 @@
 # docker-cups-alpine
 
-[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/g3rhard/docker-cups-alpine/build.yml?branch=production&style=for-the-badge&logo=github&color=333333)](https://github.com/g3rhard/docker-cups-alpine/actions/workflows/build.yml)
-[![Docker Image Version](https://img.shields.io/docker/v/g3rhard/docker-cups-alpine?style=for-the-badge&logo=docker&logoColor=white&color=333333)](https://hub.docker.com/r/g3rhard/docker-cups-alpine)
-
-Fork from [chuckcharlie/docker-cups-airprint](https://github.com/chuckcharlie/cups-avahi-airprint)
+Fork from [g3rhard/docker-cups-alpine](https://github.com/g3rhard/docker-cups-alpine)
+Which was forked from [chuckcharlie/docker-cups-airprint](https://github.com/chuckcharlie/cups-avahi-airprint)
 
 ## Configuration
 
@@ -30,6 +28,11 @@ docker run --name cups --restart unless-stopped --net host \
   -e CUPSADMIN="<username>" \
   -e CUPSPASSWORD="<password>" \
   g3rhard/docker-cups-alpine:latest
+```
+### Docker-compose
+
+```sh
+docker compose up -d
 ```
 
 ## Add and set up printer
