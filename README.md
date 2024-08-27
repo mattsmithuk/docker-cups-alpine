@@ -1,7 +1,7 @@
 # docker-cups-alpine
 
-Fork from [g3rhard/docker-cups-alpine](https://github.com/g3rhard/docker-cups-alpine)
-Which was forked from [chuckcharlie/docker-cups-airprint](https://github.com/chuckcharlie/cups-avahi-airprint)
+* Fork from [g3rhard/docker-cups-alpine](https://github.com/g3rhard/docker-cups-alpine)
+* Which was forked from [chuckcharlie/docker-cups-airprint](https://github.com/chuckcharlie/cups-avahi-airprint)
 
 ## Configuration
 
